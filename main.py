@@ -1,5 +1,6 @@
 from models.isolation_forest_model import run_iforest
 from models.knn_model import run_knn
+from models.lof_model import run_lof
 from utils.evaluation import evaluate_model_success
 from sklearn.model_selection import train_test_split
 import pandas as pd
@@ -20,7 +21,7 @@ print("""
 
 1 - Isolation Forest
 2 - KNN (K-Nearest Neighbors)
-3 - ...
+3 - LOF (Local Outlier Factor)
 
 0 - Exit System
 --------------------------------
@@ -58,7 +59,7 @@ try:
                 continue
 
         elif selection == "2":
-            print("→ KNN Model selected.")
+            print("→ KNN (K-Nearest Neighbors) Model selected.")
             print("→ Please wait while the model is running...")
 
             try:
@@ -76,7 +77,21 @@ try:
                 continue
 
         elif selection == "3":
-            ...
+            print("→ LOF (Local Outlier Factor) Model selected.")
+            print("→ Please wait while the model is running...")
+
+            try:
+                y_pred, scores, clf = run_lof(X_test.values)
+                print("✅ Model run successfully!\n")
+            except Exception as e:
+                print(f"❌ Model training failed:\n{e}\n")
+                continue
+
+            try:
+                evaluate_model_success(y_test.values, y_pred)
+            except Exception as e:
+                print(f"❌ Evaluation failed:\n{e}\n")
+                continue
 
         else:
             print("Invalid selection. Please try again.")
