@@ -1,6 +1,7 @@
 from models.isolation_forest_model import run_iforest
 from models.knn_model import run_knn
 from models.lof_model import run_lof
+from models.ocsvm_model import run_ocsvm
 from utils.evaluation import evaluate_model_success
 from sklearn.model_selection import train_test_split
 import pandas as pd
@@ -22,6 +23,7 @@ print("""
 1 - Isolation Forest
 2 - KNN (K-Nearest Neighbors)
 3 - LOF (Local Outlier Factor)
+4 - OCSVM (One-Class SVM)
 
 0 - Exit System
 --------------------------------
@@ -92,6 +94,25 @@ try:
             except Exception as e:
                 print(f"❌ Evaluation failed:\n{e}\n")
                 continue
+
+        elif selection == "4":
+            print("→ OCSVM (One-Class SVM) Model selected.")
+            print("→ Please wait while the model is running...")
+
+            try:
+                y_pred_train, scores_train, clf = run_ocsvm(X_train.values)
+                print("✅ Model run successfully!\n")
+            except Exception as e:
+                print(f"❌ Model training failed:\n{e}\n")
+                continue
+
+            try:
+                y_pred_test = clf.predict(X_test.values)
+                evaluate_model_success(y_test.values, y_pred_test)
+            except Exception as e:
+                print(f"❌ Evaluation failed:\n{e}\n")
+                continue
+
 
         else:
             print("Invalid selection. Please try again.")
