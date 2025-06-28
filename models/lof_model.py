@@ -1,6 +1,8 @@
 from pyod.models.lof import LOF
+from utils.timer import timed
 
 
+@timed
 def run_lof(X, contamination=0.00172, n_neighbors=20):
     print("→ [LOF] Fitting and predicting...")
 

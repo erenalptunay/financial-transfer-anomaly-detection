@@ -1,6 +1,8 @@
 from pyod.models.knn import KNN
+from utils.timer import timed
 
 
+@timed
 def run_knn(X, contamination=0.00172):
     print("→ [KNN] Fitting model...")
     model = KNN(
