@@ -2,18 +2,27 @@ from models.isolation_forest_model import run_iforest
 from models.knn_model import run_knn
 from models.lof_model import run_lof
 from models.ocsvm_model import run_ocsvm
+from models.logistic_regression_model import run_logreg
+from models.random_forest_model import run_rforest
+from models.gradient_boosting_model import run_gboost
+from models.linear_svc import run_linear_svc
+
 from utils.evaluation import evaluate_model_success
 from sklearn.model_selection import train_test_split
 import pandas as pd
-import numpy as np
 
 
 # Read data
 df = pd.read_csv('data/creditcard.csv')
+
+# Split features and target label
 X = df.drop('Class', axis=1)
 y = df['Class']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
 # CLI
 print("""
@@ -23,7 +32,11 @@ print("""
 1 - Isolation Forest
 2 - KNN (K-Nearest Neighbors)
 3 - LOF (Local Outlier Factor)
-4 - OCSVM (One-Class SVM)
+4 - OCSVM (One-Class SVM)!
+5 - Logistic Regression
+6 - Random Forest Classifier
+7 - Gradient Boosting Classifier
+8 - Linear SVC
 
 0 - Exit System
 --------------------------------
@@ -108,6 +121,77 @@ try:
 
             try:
                 y_pred_test = clf.predict(X_test.values)
+                evaluate_model_success(y_test.values, y_pred_test)
+            except Exception as e:
+                print(f"❌ Evaluation failed:\n{e}\n")
+                continue
+
+        elif selection == "5":
+            print("→ Logistic Regression Model selected.")
+            print("→ Please wait while the model is running...")
+
+            try:
+                y_pred_test, model, scaler = run_logreg(X_train.values, y_train.values, X_test.values)
+                print("✅ Model run successfully!\n")
+            except Exception as e:
+                print(f"❌ Model training failed:\n{e}\n")
+                continue
+
+            try:
+                evaluate_model_success(y_test.values, y_pred_test)
+            except Exception as e:
+                print(f"❌ Evaluation failed:\n{e}\n")
+                continue
+
+        elif selection == "6":
+            print("→ Random Forest Classifier Model selected.")
+            print("→ Please wait while the model is running...")
+
+            try:
+                y_pred_train, clf = run_rforest(X_train, y_train)
+                print("✅ Model run successfully!\n")
+            except Exception as e:
+                print(f"❌ Model training failed:\n{e}\n")
+                continue
+
+            try:
+                y_pred_test = clf.predict(X_test)
+                evaluate_model_success(y_test.values, y_pred_test)
+            except Exception as e:
+                print(f"❌ Evaluation failed:\n{e}\n")
+                continue
+
+        elif selection == "7":
+            print("→ Gradient Boosting Classifier Model selected.")
+            print("→ Please wait while the model is running...")
+
+            try:
+                y_pred_train, clf = run_gboost(X_train, y_train)
+                print("✅ Model run successfully!\n")
+            except Exception as e:
+                print(f"❌ Model training failed:\n{e}\n")
+                continue
+
+            try:
+                y_pred_test = clf.predict(X_test)
+                evaluate_model_success(y_test.values, y_pred_test)
+            except Exception as e:
+                print(f"❌ Evaluation failed:\n{e}\n")
+                continue
+
+        elif selection == "8":
+            print("→ Linear SVC Classifier Model selected.")
+            print("→ Please wait while the model is running...")
+
+            try:
+                y_pred_train, clf = run_linear_svc(X_train, y_train)
+                print("✅ Model run successfully!\n")
+            except Exception as e:
+                print(f"❌ Model training failed:\n{e}\n")
+                continue
+
+            try:
+                y_pred_test = clf.predict(X_test)
                 evaluate_model_success(y_test.values, y_pred_test)
             except Exception as e:
                 print(f"❌ Evaluation failed:\n{e}\n")
