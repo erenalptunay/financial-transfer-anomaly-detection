@@ -1,11 +1,13 @@
 from pyod.models.ocsvm import OCSVM
 from utils.timer import timed
-
+import pandas as pd
 
 @timed
 def run_ocsvm(x, contamination=0.00172, kernel="linear"):
-    print("→ [OCSVM] Fitting model...")
 
+    x = pd.DataFrame(x).sample(20000, random_state=42)
+
+    print("→ [OCSVM] Fitting model...")
     model = OCSVM(
         contamination=contamination,
         kernel=kernel,
