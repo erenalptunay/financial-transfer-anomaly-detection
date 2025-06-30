@@ -16,12 +16,12 @@ import pandas as pd
 df = pd.read_csv('data/creditcard.csv')
 
 # Split features and target label
-X = df.drop('Class', axis=1)
+x = df.drop('Class', axis=1)
 y = df['Class']
 
 # Split data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+x_train, X_test, y_train, y_test = train_test_split(
+    x, y, test_size=0.2, random_state=42
 )
 
 # CLI
@@ -60,7 +60,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred_train, scores_train, clf = run_iforest(X_train.values)
+                y_pred_train, scores_train, clf = run_iforest(x_train.values)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
@@ -78,7 +78,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred_train, scores_train, clf = run_knn(X_train.values)
+                y_pred_train, scores_train, clf = run_knn(x_train.values)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
@@ -113,7 +113,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred_train, scores_train, clf = run_ocsvm(X_train.values)
+                y_pred_train, scores_train, clf = run_ocsvm(x_train.values)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
@@ -131,7 +131,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred_test, model, scaler = run_logreg(X_train.values, y_train.values, X_test.values)
+                y_pred_test, model, scaler = run_logreg(x_train.values, y_train.values, X_test.values)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
@@ -148,7 +148,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred_train, clf = run_rforest(X_train, y_train)
+                y_pred_train, clf = run_rforest(x_train, y_train)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
@@ -166,7 +166,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred_train, clf = run_gboost(X_train, y_train)
+                y_pred_train, clf = run_gboost(x_train, y_train)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
@@ -184,7 +184,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred_train, clf = run_linear_svc(X_train, y_train)
+                y_pred_train, clf = run_linear_svc(x_train, y_train)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
