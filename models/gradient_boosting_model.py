@@ -6,7 +6,7 @@ from utils.timer import timed
 def run_gboost(x_train, y_train):
     print("→ [Gradient Boosting] Fitting model...")
     gbc = GradientBoostingClassifier(
-        n_estimators=50,
+        n_estimators=30,
         learning_rate=1.0,
         max_depth=1,
         random_state=0
