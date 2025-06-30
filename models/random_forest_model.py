@@ -3,14 +3,14 @@ from utils.timer import timed
 
 
 @timed
-def run_rforest(X_train, y_train):
+def run_rforest(x_train, y_train):
 
     print("→ [Random Forest] Fitting model...")
     rf = RandomForestClassifier(max_depth=2, n_jobs=-1)
-    rf.fit(X_train, y_train)
+    rf.fit(x_train, y_train)
 
     print("→ [Random Forest] Predicting...")
-    y_pred = rf.predict(X_train)
+    y_pred = rf.predict(x_train)
 
     print("→ [Random Forest] Done.")
     return y_pred, rf

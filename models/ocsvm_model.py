@@ -3,7 +3,7 @@ from utils.timer import timed
 
 
 @timed
-def run_ocsvm(X, contamination=0.00172, kernel="linear"):
+def run_ocsvm(x, contamination=0.00172, kernel="linear"):
     print("→ [OCSVM] Fitting model...")
 
     model = OCSVM(
@@ -13,10 +13,10 @@ def run_ocsvm(X, contamination=0.00172, kernel="linear"):
         gamma='auto'
     )
 
-    model.fit(X)
+    model.fit(x)
 
     print("→ [OCSVM] Predicting...")
-    y_pred = model.predict(X)
+    y_pred = model.predict(x)
     scores = model.decision_scores_
 
     print("→ [OCSVM] Done.")

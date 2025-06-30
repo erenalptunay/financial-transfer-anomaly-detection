@@ -3,7 +3,7 @@ from utils.timer import timed
 
 
 @timed
-def run_gboost(X_train, y_train):
+def run_gboost(x_train, y_train):
     print("→ [Gradient Boosting] Fitting model...")
     gbc = GradientBoostingClassifier(
         n_estimators=50,
@@ -11,10 +11,10 @@ def run_gboost(X_train, y_train):
         max_depth=1,
         random_state=0
     )
-    gbc.fit(X_train, y_train)
+    gbc.fit(x_train, y_train)
 
     print("→ [Gradient Boosting] Predicting...")
-    y_pred = gbc.predict(X_train)
+    y_pred = gbc.predict(x_train)
 
     print("→ [Gradient Boosting] Done.")
     return y_pred, gbc

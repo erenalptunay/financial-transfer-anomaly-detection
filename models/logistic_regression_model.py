@@ -4,11 +4,11 @@ from utils.timer import timed
 
 
 @timed
-def run_logreg(X_train, y_train, X_test):
+def run_logreg(x_train, y_train, X_test):
     print("→ [LogReg] Scaling data using RobustScaler...")
 
     scaler = RobustScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
+    X_train_scaled = scaler.fit_transform(x_train)
     X_test_scaled = scaler.transform(X_test)
 
     print("→ [LogReg] Fitting Logistic Regression model...")
