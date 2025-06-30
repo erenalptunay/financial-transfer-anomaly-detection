@@ -8,6 +8,7 @@ def run_linear_svc(x_train, y_train):
 
     model = LinearSVC(
         class_weight='balanced',
+        C=0.1
     )
 
     model.fit(x_train, y_train)
