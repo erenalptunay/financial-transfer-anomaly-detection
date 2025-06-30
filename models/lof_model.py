@@ -11,8 +11,9 @@ def run_lof(x, contamination=0.00172, n_neighbors=20):
         n_neighbors=n_neighbors,
         n_jobs=-1
     )
+    model.fit(x)
 
-    y_pred = model.fit_predict(x)
+    y_pred = model.predict(x)
     scores = model.decision_scores_
 
     print("→ [LOF] Done.")
