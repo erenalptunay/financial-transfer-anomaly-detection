@@ -8,7 +8,7 @@ def run_knn(x, contamination=0.00172):
     model = KNN(
         contamination=contamination,
         n_neighbors=5,
-        method='mean',
+        method='largest',
         n_jobs=-1
     )
     model.fit(x)
