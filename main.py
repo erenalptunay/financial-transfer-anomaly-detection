@@ -1,26 +1,30 @@
+# Evaluation and data split
+from utils.evaluation import evaluate_model_success
+from sklearn.model_selection import train_test_split
+import pandas as pd
+
+# Unsupervised models
 from models.isolation_forest_model import run_iforest
 from models.knn_model import run_knn
 from models.lof_model import run_lof
 from models.ocsvm_model import run_ocsvm
+
+# Supervised models
 from models.logistic_regression_model import run_logreg
 from models.random_forest_model import run_rforest
 from models.gradient_boosting_model import run_gboost
 from models.linear_svc import run_linear_svc
 
-from utils.evaluation import evaluate_model_success
-from sklearn.model_selection import train_test_split
-import pandas as pd
-
 
 # Read data
 df = pd.read_csv('data/creditcard.csv')
 
-# Split features and target label
+# Split features and label
 x = df.drop('Class', axis=1)
 y = df['Class']
 
-# Split data into training and testing sets
-x_train, X_test, y_train, y_test = train_test_split(
+# Train-test split
+x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.2, random_state=42
 )
 
@@ -29,14 +33,18 @@ print("""
 --------------------------------
     Anomaly Detection System
 
+Unsupervised Models:
 1 - Isolation Forest
 2 - KNN (K-Nearest Neighbors)
 3 - LOF (Local Outlier Factor)
-4 - OCSVM (One-Class SVM)!
+4 - OCSVM (One-Class SVM)
+
+Supervised Models:
 5 - Logistic Regression
 6 - Random Forest Classifier
 7 - Gradient Boosting Classifier
 8 - Linear SVC
+
 
 0 - Exit System
 --------------------------------
@@ -67,7 +75,7 @@ try:
                 continue
 
             try:
-                y_pred_test = clf.predict(X_test.values)
+                y_pred_test = clf.predict(x_test.values)
                 evaluate_model_success(y_test.values, y_pred_test)
             except Exception as e:
                 print(f"❌ Evaluation failed:\n{e}\n")
@@ -85,7 +93,7 @@ try:
                 continue
 
             try:
-                y_pred_test = clf.predict(X_test.values)
+                y_pred_test = clf.predict(x_test.values)
                 evaluate_model_success(y_test.values, y_pred_test)
             except Exception as e:
                 print(f"❌ Evaluation failed:\n{e}\n")
@@ -96,7 +104,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred, scores, clf = run_lof(X_test.values)
+                y_pred, scores, clf = run_lof(x_test.values)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
@@ -120,7 +128,7 @@ try:
                 continue
 
             try:
-                y_pred_test = clf.predict(X_test.values)
+                y_pred_test = clf.predict(x_test.values)
                 evaluate_model_success(y_test.values, y_pred_test)
             except Exception as e:
                 print(f"❌ Evaluation failed:\n{e}\n")
@@ -131,7 +139,7 @@ try:
             print("→ Please wait while the model is running...")
 
             try:
-                y_pred_test, model, scaler = run_logreg(x_train.values, y_train.values, X_test.values)
+                y_pred_test, model, scaler = run_logreg(x_train.values, y_train.values, x_test.values)
                 print("✅ Model run successfully!\n")
             except Exception as e:
                 print(f"❌ Model training failed:\n{e}\n")
@@ -155,7 +163,7 @@ try:
                 continue
 
             try:
-                y_pred_test = clf.predict(X_test)
+                y_pred_test = clf.predict(x_test)
                 evaluate_model_success(y_test.values, y_pred_test)
             except Exception as e:
                 print(f"❌ Evaluation failed:\n{e}\n")
@@ -173,7 +181,7 @@ try:
                 continue
 
             try:
-                y_pred_test = clf.predict(X_test)
+                y_pred_test = clf.predict(x_test)
                 evaluate_model_success(y_test.values, y_pred_test)
             except Exception as e:
                 print(f"❌ Evaluation failed:\n{e}\n")
@@ -191,12 +199,11 @@ try:
                 continue
 
             try:
-                y_pred_test = clf.predict(X_test)
+                y_pred_test = clf.predict(x_test)
                 evaluate_model_success(y_test.values, y_pred_test)
             except Exception as e:
                 print(f"❌ Evaluation failed:\n{e}\n")
                 continue
-
 
         else:
             print("Invalid selection. Please try again.")
