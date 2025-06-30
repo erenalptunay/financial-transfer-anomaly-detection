@@ -3,7 +3,7 @@ from utils.timer import timed
 
 
 @timed
-def run_iforest(X, contamination=0.002, random_state=42):
+def run_iforest(X, contamination=0.01, random_state=42):
     print("→ [IForest] Fitting model...")
     clf = IForest(contamination=contamination, random_state=random_state)
     clf.fit(X)
